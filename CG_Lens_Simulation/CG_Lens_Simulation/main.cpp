@@ -53,7 +53,7 @@ int main() {
         //light the scene (inside or outside shader?)
         //write some shaders
         
-        
+        //change
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
