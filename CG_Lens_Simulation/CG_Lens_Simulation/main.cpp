@@ -47,9 +47,11 @@ int main() {
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
         glClear( GL_COLOR_BUFFER_BIT );
-
+        
         //do ur graphics here
         //load a simple geometry
+        //light the scene (inside or outside shader?)
+        //write some shaders
         
         
         // Swap buffers
