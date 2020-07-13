@@ -1,10 +1,11 @@
 #include <iostream>
-
+//path tracing with lens distortion and materials
+//virtual photobooth basically
 //adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-//adding GLFW
+//adding GLFW (focused more on windows)
 #include <GLFW/glfw3.h>
 
 int main() {
@@ -48,8 +49,9 @@ int main() {
         glClear( GL_COLOR_BUFFER_BIT );
 
         //do ur graphics here
+        //load a simple geometry
         
-
+        
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
