@@ -8,7 +8,11 @@
 //adding GLFW (focused more on windows)
 #include <GLFW/glfw3.h>
 
-//load spheres and rectangular boxes
+//load spheres and rectangular boxes (sphere and box objects)
+//create camera
+//create scene (cornell box)
+//create pathtracing rules
+//shaders for materials: (mirror, glassy?, plastic, etc.)
 
 int main() {
     glewExperimental = true; //Needed for core profile
