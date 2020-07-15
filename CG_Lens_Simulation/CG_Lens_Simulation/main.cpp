@@ -8,6 +8,8 @@
 //adding GLFW (focused more on windows)
 #include <GLFW/glfw3.h>
 
+//load spheres and rectangular boxes
+
 int main() {
     glewExperimental = true; //Needed for core profile
     
