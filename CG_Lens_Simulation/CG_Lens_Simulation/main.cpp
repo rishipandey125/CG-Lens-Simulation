@@ -8,6 +8,8 @@
 //adding GLFW (focused more on windows)
 #include <GLFW/glfw3.h>
 
+//writing classes and obj programming not hard
+//get the rendering pipeline down
 // (3d Functions) load spheres and rectangular boxes (sphere and //box objects)
 //create camera
 //create scene (cornell box)
