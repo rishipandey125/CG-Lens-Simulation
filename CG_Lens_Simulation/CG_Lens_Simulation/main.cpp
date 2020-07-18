@@ -1,20 +1,11 @@
 #include <iostream>
-//path tracing with lens distortion and materials
-//virtual photobooth basically
+
 //adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-//adding GLFW (focused more on windows)
+//adding GLFW
 #include <GLFW/glfw3.h>
-
-//writing classes and obj programming not hard
-//get the rendering pipeline down
-// (3d Functions) load spheres and rectangular boxes (sphere and //box objects)
-//create camera
-//create scene (cornell box)
-//create pathtracing rules
-//shaders for materials: (mirror, glassy?, plastic, etc.)
 
 int main() {
     glewExperimental = true; //Needed for core profile
@@ -53,21 +44,15 @@ int main() {
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
-        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
+        //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
         
-        //do ur graphics here
-        //load a simple geometry
-        //light the scene (inside or outside shader?)
-        //write some shaders
-        //how to shaders come in?
-        /*use object oriented programming to draw the geometry
-        and make rules for pathtracing, use glsl for lighting, materials, and camera distortion
-         lets start by drawing a circle and shading it red using a glsl fragment shader.
-        */
-        //add glm to do math
-        //glDrawPixels() allows to draw to an image
-        //change
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-0.5f, -0.5f);
+        glVertex2f(0.0f, 0.5f);
+        glVertex2f(0.5f, -0.5f);
+        glEnd();
+        
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B6101BBF24BA88B600D2187E /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B6101BBE24BA88B600D2187E /* libGLEW.2.1.0.dylib */; };
 		B6101BC024BA88D900D2187E /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B620CC4824BA85050061D36F /* libglfw.3.3.dylib */; };
-		B655093524BFA99500CFDF8D /* environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B655093324BFA99500CFDF8D /* environment.cpp */; };
 		B6B09FFD24BA45CB003D2F87 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B09FFC24BA45CB003D2F87 /* main.cpp */; };
 		B6B0A00524BA464F003D2F87 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B0A00424BA464F003D2F87 /* OpenGL.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
@@ -30,8 +29,6 @@
 		B6101BBE24BA88B600D2187E /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../usr/local/Cellar/glew/2.1.0_1/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		B620CC4824BA85050061D36F /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../../usr/local/Cellar/glfw/3.3.2/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
 		B620CC4B24BA85490061D36F /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
-		B655093324BFA99500CFDF8D /* environment.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = environment.cpp; sourceTree = "<group>"; };
-		B655093424BFA99500CFDF8D /* environment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = environment.hpp; sourceTree = "<group>"; };
 		B6B09FF924BA45CB003D2F87 /* CG_Lens_Simulation */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CG_Lens_Simulation; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B09FFC24BA45CB003D2F87 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B6B0A00424BA464F003D2F87 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -74,8 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				B6B09FFC24BA45CB003D2F87 /* main.cpp */,
-				B655093324BFA99500CFDF8D /* environment.cpp */,
-				B655093424BFA99500CFDF8D /* environment.hpp */,
 			);
 			path = CG_Lens_Simulation;
 			sourceTree = "<group>";
@@ -151,7 +146,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6B09FFD24BA45CB003D2F87 /* main.cpp in Sources */,
-				B655093524BFA99500CFDF8D /* environment.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
