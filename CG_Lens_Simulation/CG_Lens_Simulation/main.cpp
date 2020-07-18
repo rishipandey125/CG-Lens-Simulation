@@ -60,7 +60,13 @@ int main() {
         //load a simple geometry
         //light the scene (inside or outside shader?)
         //write some shaders
-        
+        //how to shaders come in?
+        /*use object oriented programming to draw the geometry
+        and make rules for pathtracing, use glsl for lighting, materials, and camera distortion
+         lets start by drawing a circle and shading it red using a glsl fragment shader.
+        */
+        //add glm to do math
+        //glDrawPixels() allows to draw to an image
         //change
         // Swap buffers
         glfwSwapBuffers(window);
