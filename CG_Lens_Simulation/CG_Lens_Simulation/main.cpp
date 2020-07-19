@@ -14,10 +14,17 @@ static unsigned int compileShader(unsigned int shaderType, const std::string &so
     glCompileShader(shaderID);
     int result;
     glGetShaderiv(shaderID,GL_COMPILE_STATUS, &result);
+    //did the shader compile?
     if (result == GL_FALSE) {
-        std::cout << "Shader did Not Compile" << std::endl;
         //which shader failed to compile?
-        
+        int typeResult;
+        glGetShaderiv(shaderID,GL_SHADER_TYPE, &typeResult);
+        if (typeResult == GL_VERTEX_SHADER) {
+            std::cout << "Vertex Shader Failed to Compile" << std::endl;
+        } else {
+            std::cout << "Fragment Shader Failed to Compile" << std::endl;
+        }
+        glDeleteShader(shaderID);
         return 0;
     }
     return shaderID;
@@ -91,9 +98,9 @@ int main() {
     
     std::string vertexShader =
         "#version 330 core \n"
-        "layout(location = 0) in vec2 position;\n"
+        "layout(location = 0) in vec4 positions;\n"
         "void main() { \n"
-            "gl_Position = position; \n"
+            "gl_Position = positions; \n"
         "} \n";
     
     std::string fragmentShader =
