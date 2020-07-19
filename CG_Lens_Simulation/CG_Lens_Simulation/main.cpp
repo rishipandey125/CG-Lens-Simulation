@@ -7,8 +7,27 @@
 //adding GLFW
 #include <GLFW/glfw3.h>
 
-static int createShader(const std::string &vertexShader, const std::string &fragmentShader) {
-    return 0;
+static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
+    unsigned int shaderID = glCreateShader(shaderType);
+    const char* src = sourceCode[0];
+    glShaderSource(shaderID, &src, nullptr);
+    glComileShader(shaderID);
+    return shaderID;
+}
+
+static unsigned int createShader(const std::string &vertexShader, const std::string &fragmentShader) {
+    unsigned int program = glCreateProgram(); //creating a program
+    unsigned int vShader = compileShader(GL_VERTEX_SHADER,vertexShader);
+    unsigned int fShader = complieShader(GL_FRAGMENT_SHADRE,fragmentShader);
+    glAttachShader(program,vShader);
+    glAttachShader(program,fShader);
+    glLinkProgram(program);
+    glValidateProgram(program);
+    
+    glDeleteShader(vShader);
+    glDeleteShader(fShader);
+     
+    return program;
 }
 
 int main() {
@@ -62,7 +81,7 @@ int main() {
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
-        glDrawArrays(GL_TRIANGLES,0,3); 
+        glDrawArrays(GL_TRIANGLES,0,3);
     
         glEnd();
         
