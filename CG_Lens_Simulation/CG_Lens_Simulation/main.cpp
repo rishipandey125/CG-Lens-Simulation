@@ -93,7 +93,7 @@ int main() {
     glGenBuffers(1,&buffer); //generates a single buffer
     glBindBuffer(GL_ARRAY_BUFFER, buffer); //
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions),positions,GL_STATIC_DRAW);
-    //trying extra lines
+    //trying extra lines (understand this and buffers better)
     unsigned int vertexArray;
     glGenVertexArrays(1, &vertexArray);
     glBindVertexArray(vertexArray);
