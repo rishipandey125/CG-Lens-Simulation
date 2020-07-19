@@ -41,6 +41,7 @@ static unsigned int createShader(const std::string &vertexShader, const std::str
     glAttachShader(program,fShader);
     glLinkProgram(program);
     glValidateProgram(program);
+    
     //we delete because we linked them to a program, otherwise they are just sitting around
     glDeleteShader(vShader);
     glDeleteShader(fShader);
@@ -88,12 +89,16 @@ int main() {
     };
     
     unsigned int buffer; //buffer reference
-    unsigned int index = 0;
+//    unsigned int index = 0;
     glGenBuffers(1,&buffer); //generates a single buffer
     glBindBuffer(GL_ARRAY_BUFFER, buffer); //
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions),positions,GL_STATIC_DRAW);
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
+    //trying extra lines
+    unsigned int vertexArray;
+    glGenVertexArrays(1, &vertexArray);
+    glBindVertexArray(vertexArray);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
     // Ensure we can capture the escape key being pressed below
     
     std::string vertexShader =
@@ -117,6 +122,7 @@ int main() {
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
+        
         glDrawArrays(GL_TRIANGLES,0,3);
     
         glEnd();
