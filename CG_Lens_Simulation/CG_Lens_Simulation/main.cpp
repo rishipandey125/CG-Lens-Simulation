@@ -9,29 +9,32 @@
 
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
     unsigned int shaderID = glCreateShader(shaderType);
-    const char* src = sourceCode[0];
-    glShaderSource(shaderID, &src, nullptr);
-    glComileShader(shaderID);
-    
-    //Error Handling
+    const char* src = sourceCode.c_str();
+    glShaderSource(shaderID, 1, &src, nullptr);
+    glCompileShader(shaderID);
     int result;
-    glGetShaderiv(shaderID, GL_COMPILE_STATUS,&result);
-    //GL_FALSE equals 0
-//    if (result == GL_FALSE) {
-//        
-//    }
+    glGetShaderiv(shaderID,GL_COMPILE_STATUS, &result);
+    if (result == GL_FALSE) {
+        std::cout << "Shader did Not Compile" << std::endl;
+        //which shader failed to compile?
+        
+        return 0;
+    }
     return shaderID;
 }
 
+/*
+ Vertex Shaders allow you to conduct world transformations. Do math on the vertices and scale them appropriately.
+ */
 static unsigned int createShader(const std::string &vertexShader, const std::string &fragmentShader) {
     unsigned int program = glCreateProgram(); //creating a program
     unsigned int vShader = compileShader(GL_VERTEX_SHADER,vertexShader);
-    unsigned int fShader = complieShader(GL_FRAGMENT_SHADRE,fragmentShader);
+    unsigned int fShader = compileShader(GL_FRAGMENT_SHADER,fragmentShader);
     glAttachShader(program,vShader);
     glAttachShader(program,fShader);
     glLinkProgram(program);
     glValidateProgram(program);
-    
+    //we delete because we linked them to a program, otherwise they are just sitting around
     glDeleteShader(vShader);
     glDeleteShader(fShader);
      
@@ -78,14 +81,32 @@ int main() {
     };
     
     unsigned int buffer; //buffer reference
+    unsigned int index = 0;
     glGenBuffers(1,&buffer); //generates a single buffer
     glBindBuffer(GL_ARRAY_BUFFER, buffer); //
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions),positions,GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
     // Ensure we can capture the escape key being pressed below
-    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
+    std::string vertexShader =
+        "#version 330 core \n"
+        "layout(location = 0) in vec2 position;\n"
+        "void main() { \n"
+            "gl_Position = position; \n"
+        "} \n";
+    
+    std::string fragmentShader =
+        "#version 330 core \n"
+        "layout(location = 0) out vec4 color; \n"
+        "void main() \n {"
+            "color = vec4(1.0,0.0,0.0,1.0); \n"
+        "} \n";
+    
+    unsigned int shader = createShader(vertexShader,fragmentShader);
+    glUseProgram(shader);
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+     
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
