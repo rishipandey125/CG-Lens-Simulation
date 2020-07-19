@@ -7,6 +7,10 @@
 //adding GLFW
 #include <GLFW/glfw3.h>
 
+static int createShader(const std::string &vertexShader, const std::string &fragmentShader) {
+    return 0;
+}
+
 int main() {
     glewExperimental = true; //Needed for core profile
     
@@ -39,18 +43,26 @@ int main() {
         std::cout << "FAILED to Initialize GLEW" << std::endl;
         return -1;
     }
+    //2d vertex positions of triangle
+    float positions[6] = {
+        -0.5f, -0.5f,
+        0.0f, 0.5f,
+        0.5f, -0.5f
+    };
     
+    unsigned int buffer; //buffer reference
+    glGenBuffers(1,&buffer); //generates a single buffer
+    glBindBuffer(GL_ARRAY_BUFFER, buffer); //
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positions),positions,GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
-        
-        glBegin(GL_TRIANGLES);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0.0f, 0.5f);
-        glVertex2f(0.5f, -0.5f);
+        glDrawArrays(GL_TRIANGLES,0,3); 
     
         glEnd();
         
