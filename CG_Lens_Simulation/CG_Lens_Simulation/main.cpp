@@ -12,6 +12,14 @@ static unsigned int compileShader(unsigned int shaderType, const std::string &so
     const char* src = sourceCode[0];
     glShaderSource(shaderID, &src, nullptr);
     glComileShader(shaderID);
+    
+    //Error Handling
+    int result;
+    glGetShaderiv(shaderID, GL_COMPILE_STATUS,&result);
+    //GL_FALSE equals 0
+//    if (result == GL_FALSE) {
+//        
+//    }
     return shaderID;
 }
 
