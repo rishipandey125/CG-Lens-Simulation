@@ -7,9 +7,10 @@
 //adding GLFW
 #include <GLFW/glfw3.h>
 
-loadShader() {
+static std::string loadShader() {
     
 }
+
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
     unsigned int shaderID = glCreateShader(shaderType);
     const char* src = sourceCode.c_str();
