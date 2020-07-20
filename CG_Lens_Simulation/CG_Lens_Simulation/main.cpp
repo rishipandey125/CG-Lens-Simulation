@@ -7,6 +7,9 @@
 //adding GLFW
 #include <GLFW/glfw3.h>
 
+loadShader() {
+    
+}
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
     unsigned int shaderID = glCreateShader(shaderType);
     const char* src = sourceCode.c_str();
@@ -58,6 +61,7 @@ int main() {
         return -1;
     }
     
+    //Setting up OpenGL and Window
     glfwWindowHint(GLFW_SAMPLES, 4); //antialiasing 4x: minimizing distortion
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -81,6 +85,7 @@ int main() {
         std::cout << "FAILED to Initialize GLEW" << std::endl;
         return -1;
     }
+    
     //2d vertex positions of triangle
     float positions[6] = {
         -0.5f, -0.5f,
@@ -89,17 +94,19 @@ int main() {
     };
     
     unsigned int buffer; //buffer reference
-//    unsigned int index = 0;
-    glGenBuffers(1,&buffer); //generates a single buffer
-    glBindBuffer(GL_ARRAY_BUFFER, buffer); //
+    unsigned int index = 0;
+    //Buffers just hold data for OpenGL, you have to create one for the positions
+    glGenBuffers(1,&buffer); //specifies how many buffers to generate
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions),positions,GL_STATIC_DRAW);
-    //trying extra lines (understand this and buffers better)
+    
+    //Stores Vertex Data for OpenGL
     unsigned int vertexArray;
     glGenVertexArrays(1, &vertexArray);
     glBindVertexArray(vertexArray);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0); //sizeof(float)*2 dictates data to vertices
-    // Ensure we can capture the escape key being pressed below
+    glEnableVertexAttribArray(index);
+    //sizeof(float)*2 dictates data to vertices
+    glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
     
     std::string vertexShader =
         "#version 330 core \n"
