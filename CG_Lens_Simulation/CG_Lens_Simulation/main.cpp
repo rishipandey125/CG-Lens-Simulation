@@ -14,7 +14,7 @@ static std::string loadShader(std::string filePath) {
     std::string vertexCode;
     std::string fragmentCode;
     int shaderType = -1;
-    while (getline(stream,line)) {
+    while (std::getline(stream,line)) {
         std::cout << "get into loop" << std::endl;
         if (line.find("#ShaderType") != std::string::npos) {
             std::cout << "Detects ShaderType Tag" << std::endl;
