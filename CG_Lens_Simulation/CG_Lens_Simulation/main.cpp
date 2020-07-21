@@ -11,15 +11,30 @@
 static std::string loadShader(std::string filePath) {
     std::ifstream stream(filePath);
     std::string line;
+    std::string vertexCode;
+    std::string fragmentCode;
+    int shaderType = -1;
     while (getline(stream,line)) {
+        std::cout << "get into loop" << std::endl;
         if (line.find("#ShaderType") != std::string::npos) {
+            std::cout << "Detects ShaderType Tag" << std::endl;
             if(line.find("Vertex") != std::string::npos) {
-                //set to vertex
+                
+               //set to vertex
+                shaderType = 0;
             } else if (line.find("Fragment") != std::string::npos) {
                 //set to fragment
+                shaderType = 1;
+            }
+        } else {
+            if (shaderType == 0) {
+                vertexCode += line;
+            } else if (shaderType == 1) {
+                fragmentCode += line;
             }
         }
     }
+    return vertexCode;
 }
 
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
@@ -120,10 +135,12 @@ int main() {
     //sizeof(float)*2 dictates data to vertices
     glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
     
-    unsigned int shader = createShader(vertexShader,fragmentShader);
-    glUseProgram(shader);
+//    unsigned int shader = createShader(vertexShader,fragmentShader);
+//    glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-     
+    std::string result = loadShader("initial_shader.glsl");
+    std::cout << result << std::endl;
+
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
@@ -136,7 +153,7 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    glDeleteProgram(shader);
-    
+//    glDeleteProgram(shader);
+
     return 0;
 }
