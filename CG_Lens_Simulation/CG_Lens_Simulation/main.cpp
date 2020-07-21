@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <fstream>
+#include <string>
 //adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -7,8 +8,18 @@
 //adding GLFW
 #include <GLFW/glfw3.h>
 
-static std::string loadShader() {
-    
+static std::string loadShader(std::string filePath) {
+    std::ifstream stream(filePath);
+    std::string line;
+    while (getline(stream,line)) {
+        if (line.find("#ShaderType") != std::string::npos) {
+            if(line.find("Vertex") != std::string::npos) {
+                //set to vertex
+            } else if (line.find("Fragment") != std::string::npos) {
+                //set to fragment
+            }
+        }
+    }
 }
 
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
@@ -109,20 +120,6 @@ int main() {
     //sizeof(float)*2 dictates data to vertices
     glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
     
-    std::string vertexShader =
-        "#version 330 core \n"
-        "layout(location = 0) in vec4 positions;\n"
-        "void main() { \n"
-            "gl_Position = positions; \n"
-        "} \n";
-    
-    std::string fragmentShader =
-        "#version 330 core \n"
-        "layout(location = 0) out vec4 color; \n"
-        "void main() \n {"
-            "color = vec4(1.0,0.0,0.0,1.0); \n"
-        "} \n";
-    
     unsigned int shader = createShader(vertexShader,fragmentShader);
     glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -139,6 +136,7 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    glDeleteProgram(shader);
     
     return 0;
 }
