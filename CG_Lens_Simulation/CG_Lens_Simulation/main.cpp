@@ -4,46 +4,46 @@
 //adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
-
+//adding GLFW
+#include <GLFW/glfw3.h>
 enum SHADER_TYPE: int {
     NONE,
     VERTEX_SHADER_ID,
     FRAGMENT_SHADER_ID
 };
 
-//adding GLFW
-#include <GLFW/glfw3.h>
-
-struct ShaderSourceCode {
-    std::string vSourceCode;
+struct ShaderSource {
+    std::string sourceCode;
     SHADER_TYPE shaderType;
 };
 
-static std::string loadShader(std::string filePath) {
+ShaderSource loadShader(std::string filePath) {
+    //set to load just one shader, because sometimes we may only need 1, more efficient
     std::ifstream input(filePath);
     std::string line;
-    std::string vertexCode;
-    std::string fragmentCode;
-    SHADER_TYPE shaderType = NONE;
+    std::string shaderCode;
+    SHADER_TYPE type = NONE;
+    bool typeFound = false;
     while (getline(input,line)) {
-        if (line.find("#ShaderType") != std::string::npos) {
-            if(line.find("Vertex") != std::string::npos) {
-               //set to vertex
-                shaderType = VERTEX_SHADER_ID;
-            } else if (line.find("Fragment") != std::string::npos) {
-                //set to fragment
-                shaderType = FRAGMENT_SHADER_ID;
+        if (!typeFound) {
+            if (line.find("#ShaderType") != std::string::npos) {
+                if(line.find("Vertex") != std::string::npos) {
+                   //set to vertex
+                    type = VERTEX_SHADER_ID;
+                } else if (line.find("Fragment") != std::string::npos) {
+                    //set to fragment
+                    type = FRAGMENT_SHADER_ID;
+                }
             }
+            typeFound = true;
         } else {
-            if (shaderType == VERTEX_SHADER_ID) {
-                vertexCode.append(line);
-            } else if (shaderType == FRAGMENT_SHADER_ID) {
-                fragmentCode.append(line);
-            }
+            shaderCode.append(line);
         }
     }
-    //create object to return both
-    return vertexCode;
+    ShaderSource shaderInfo;
+    shaderInfo.sourceCode = shaderCode;
+    shaderInfo.shaderType = type;
+    return shaderInfo;
 }
 
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
@@ -147,10 +147,11 @@ int main() {
 //    unsigned int shader = createShader(vertexShader,fragmentShader);
 //    glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    std::string result = loadShader(
+    ShaderSource result = loadShader(
                             "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_shader.glsl");
-    std::cout << "length of string: " << result.length() << std::endl;
-    std::cout << result << std::endl;
+    std::cout << "Source Code: " << std::endl;
+    std::cout << result.sourceCode << std::endl;
+    std::cout << "Shader Type: " << result.shaderType << std::endl;
 
 //    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
 //        //clear screen to avoid flickering
@@ -168,3 +169,11 @@ int main() {
 
     return 0;
 }
+
+
+//#ShaderType Fragment
+//#version 330 core
+//layout(location = 0) out vec4 color;
+//void main()  {
+//    color = vec4(1.0,0.0,0.0,1.0);
+//}
