@@ -10,18 +10,14 @@
 
 static std::string loadShader(std::string filePath) {
     std::ifstream input(filePath);
-    
     std::string line;
     std::string vertexCode;
     std::string fragmentCode;
     int shaderType = -1;
     int count = 0;
-    getline(input,line);
-    std::cout << line << std::endl;
     while (getline(input,line)) {
-        std::cout << "get into loop" << std::endl;
+        std::cout << line << std::endl;
         if (line.find("#ShaderType") != std::string::npos) {
-            std::cout << "Detects ShaderType Tag" << std::endl;
             if(line.find("Vertex") != std::string::npos) {
                 
                //set to vertex
@@ -32,13 +28,14 @@ static std::string loadShader(std::string filePath) {
             }
         } else {
             if (shaderType == 0) {
-                vertexCode += line;
+                vertexCode.append(line);
             } else if (shaderType == 1) {
                 fragmentCode += line;
             }
         }
         count += 1;
     }
+    //create object to return both
     return vertexCode;
 }
 
@@ -143,7 +140,8 @@ int main() {
 //    unsigned int shader = createShader(vertexShader,fragmentShader);
 //    glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    std::string result = loadShader("initial_shader.glsl");
+    std::string result = loadShader(
+                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_shader.glsl");
     std::cout << "length of string: " << result.length() << std::endl;
     std::cout << result << std::endl;
 
