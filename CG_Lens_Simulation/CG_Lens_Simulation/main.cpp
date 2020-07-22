@@ -9,12 +9,16 @@
 #include <GLFW/glfw3.h>
 
 static std::string loadShader(std::string filePath) {
-    std::ifstream stream(filePath);
+    std::ifstream input(filePath);
+    
     std::string line;
     std::string vertexCode;
     std::string fragmentCode;
     int shaderType = -1;
-    while (std::getline(stream,line)) {
+    int count = 0;
+    getline(input,line);
+    std::cout << line << std::endl;
+    while (getline(input,line)) {
         std::cout << "get into loop" << std::endl;
         if (line.find("#ShaderType") != std::string::npos) {
             std::cout << "Detects ShaderType Tag" << std::endl;
@@ -33,6 +37,7 @@ static std::string loadShader(std::string filePath) {
                 fragmentCode += line;
             }
         }
+        count += 1;
     }
     return vertexCode;
 }
@@ -139,20 +144,21 @@ int main() {
 //    glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     std::string result = loadShader("initial_shader.glsl");
+    std::cout << "length of string: " << result.length() << std::endl;
     std::cout << result << std::endl;
 
-    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
-        //clear screen to avoid flickering
-        glClear( GL_COLOR_BUFFER_BIT );
-        
-        glDrawArrays(GL_TRIANGLES,0,3);
-    
-        glEnd();
-        
-        // Swap buffers
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+//    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
+//        //clear screen to avoid flickering
+//        glClear( GL_COLOR_BUFFER_BIT );
+//
+//        glDrawArrays(GL_TRIANGLES,0,3);
+//
+//        glEnd();
+//
+//        // Swap buffers
+//        glfwSwapBuffers(window);
+//        glfwPollEvents();
+//    }
 //    glDeleteProgram(shader);
 
     return 0;
