@@ -12,12 +12,12 @@ enum SHADER_TYPE: int {
     FRAGMENT_SHADER_ID
 };
 
-struct ShaderSource {
+struct Shader {
     std::string sourceCode;
     SHADER_TYPE shaderType;
 };
 
-ShaderSource loadShader(std::string filePath) {
+Shader loadShader(std::string filePath) {
     //set to load just one shader, because sometimes we may only need 1, more efficient
     std::ifstream input(filePath);
     std::string line;
@@ -40,7 +40,7 @@ ShaderSource loadShader(std::string filePath) {
             shaderCode.append(line);
         }
     }
-    ShaderSource shaderInfo;
+    Shader shaderInfo;
     shaderInfo.sourceCode = shaderCode;
     shaderInfo.shaderType = type;
     return shaderInfo;
@@ -143,37 +143,30 @@ int main() {
     glEnableVertexAttribArray(index);
     //sizeof(float)*2 dictates data to vertices
     glVertexAttribPointer(index,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
-    
-//    unsigned int shader = createShader(vertexShader,fragmentShader);
-//    glUseProgram(shader);
+    Shader vertexShader = loadShader(
+                                           "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_vertex.glsl");
+    Shader fragmentShader = loadShader(
+                                           "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_fragment.glsl");
+    unsigned int shader = createShader(vertexShader.sourceCode,fragmentShader.sourceCode);
+    glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    ShaderSource result = loadShader(
-                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_shader.glsl");
-    std::cout << "Source Code: " << std::endl;
-    std::cout << result.sourceCode << std::endl;
-    std::cout << "Shader Type: " << result.shaderType << std::endl;
+    
+    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
+        //clear screen to avoid flickering
+        glClear( GL_COLOR_BUFFER_BIT );
 
-//    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
-//        //clear screen to avoid flickering
-//        glClear( GL_COLOR_BUFFER_BIT );
-//
-//        glDrawArrays(GL_TRIANGLES,0,3);
-//
-//        glEnd();
-//
-//        // Swap buffers
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//    }
-//    glDeleteProgram(shader);
+        glDrawArrays(GL_TRIANGLES,0,3);
+
+        glEnd();
+
+        // Swap buffers
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glDeleteProgram(shader);
 
     return 0;
 }
 
 
-//#ShaderType Fragment
-//#version 330 core
-//layout(location = 0) out vec4 color;
-//void main()  {
-//    color = vec4(1.0,0.0,0.0,1.0);
-//}
+

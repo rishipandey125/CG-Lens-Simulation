@@ -5,3 +5,4 @@ void main() {
     gl_Position = positions;
 }
 
+#ShaderType Fragment
