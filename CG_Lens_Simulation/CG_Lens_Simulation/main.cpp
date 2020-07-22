@@ -5,35 +5,36 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
+public static int vertexShaderID = 0;
+public static int fragmentShaderID = 1;
 //adding GLFW
 #include <GLFW/glfw3.h>
-
+struct ShaderSourceCode {
+    std::string vSourceCode;
+    int shaderType;
+}
 static std::string loadShader(std::string filePath) {
     std::ifstream input(filePath);
     std::string line;
     std::string vertexCode;
     std::string fragmentCode;
     int shaderType = -1;
-    int count = 0;
     while (getline(input,line)) {
-        std::cout << line << std::endl;
         if (line.find("#ShaderType") != std::string::npos) {
             if(line.find("Vertex") != std::string::npos) {
-                
                //set to vertex
-                shaderType = 0;
+                shaderType = vertexShaderID;
             } else if (line.find("Fragment") != std::string::npos) {
                 //set to fragment
-                shaderType = 1;
+                shaderType = fragmentShaderID;
             }
         } else {
-            if (shaderType == 0) {
+            if (shaderType == vertexShaderID) {
                 vertexCode.append(line);
-            } else if (shaderType == 1) {
-                fragmentCode += line;
+            } else if (shaderType == fragmentShaderID) {
+                fragmentCode.append(line);
             }
         }
-        count += 1;
     }
     //create object to return both
     return vertexCode;
