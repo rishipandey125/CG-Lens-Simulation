@@ -2,17 +2,22 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-//adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
-//adding GLFW
 #include <GLFW/glfw3.h>
 
+/*
+ Shader Structure Containing GLSL Source Code and GL Shader Type
+ */
 struct Shader {
     std::string sourceCode;
     int shaderType;
 };
 
+
+/*
+ Load Shader Function.
+ */
 Shader loadShader(std::string filePath) {
     //set to load just one shader, because sometimes we may only need 1, more efficient
     std::ifstream input(filePath);
@@ -42,6 +47,9 @@ Shader loadShader(std::string filePath) {
     return shaderInfo;
 }
 
+/*
+ Compile Shader Function
+ */
 static unsigned int compileShader(unsigned int shaderType, const std::string &sourceCode) {
     unsigned int shaderID = glCreateShader(shaderType);
     const char* src = sourceCode.c_str();
@@ -73,7 +81,7 @@ static unsigned int compileShader(unsigned int shaderType, const std::string &so
 }
 
 /*
- Vertex Shaders allow you to conduct world transformations. Do math on the vertices and scale them appropriately.
+  Create Shader Function
  */
 static unsigned int createShader(const std::string &vertexShader, const std::string &fragmentShader) {
     unsigned int program = glCreateProgram(); //creating a program
