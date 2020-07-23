@@ -1,47 +1,43 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 //adding GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
 //adding GLFW
 #include <GLFW/glfw3.h>
-enum SHADER_TYPE: int {
-    NONE,
-    VERTEX_SHADER_ID,
-    FRAGMENT_SHADER_ID
-};
 
 struct Shader {
     std::string sourceCode;
-    SHADER_TYPE shaderType;
+    int shaderType;
 };
 
 Shader loadShader(std::string filePath) {
     //set to load just one shader, because sometimes we may only need 1, more efficient
     std::ifstream input(filePath);
     std::string line;
-    std::string shaderCode;
-    SHADER_TYPE type = NONE;
+    std::stringstream shaderCode;
+    int type = -1;
     bool typeFound = false;
     while (getline(input,line)) {
         if (!typeFound) {
             if (line.find("#ShaderType") != std::string::npos) {
                 if(line.find("Vertex") != std::string::npos) {
                    //set to vertex
-                    type = VERTEX_SHADER_ID;
+                    type = GL_VERTEX_SHADER;
                 } else if (line.find("Fragment") != std::string::npos) {
                     //set to fragment
-                    type = FRAGMENT_SHADER_ID;
+                    type = GL_FRAGMENT_SHADER;
                 }
             }
             typeFound = true;
         } else {
-            shaderCode.append(line);
+            shaderCode << line << "\n";
         }
     }
     Shader shaderInfo;
-    shaderInfo.sourceCode = shaderCode;
+    shaderInfo.sourceCode = shaderCode.str();
     shaderInfo.shaderType = type;
     return shaderInfo;
 }
@@ -63,11 +59,12 @@ static unsigned int compileShader(unsigned int shaderType, const std::string &so
         } else {
             std::cout << "Fragment Shader Failed to Compile" << std::endl;
         }
+        std::cout << src << std:: endl;
         int logResultLength;
         glGetShaderiv(shaderID,GL_INFO_LOG_LENGTH,&logResultLength);
         char* message = (char*)alloca(logResultLength*sizeof(char));
         glGetShaderInfoLog(shaderID,logResultLength,&logResultLength,message);
-        std::cout << "SHADER ERROR MESSAGE" << std::endl;
+        std::cout << "SHADER ERROR MESSAGE:" << std::endl;
         std::cout << message << std::endl;
         glDeleteShader(shaderID);
         return 0;
