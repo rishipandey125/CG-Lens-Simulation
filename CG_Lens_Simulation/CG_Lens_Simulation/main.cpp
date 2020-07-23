@@ -63,6 +63,12 @@ static unsigned int compileShader(unsigned int shaderType, const std::string &so
         } else {
             std::cout << "Fragment Shader Failed to Compile" << std::endl;
         }
+        int logResultLength;
+        glGetShaderiv(shaderID,GL_INFO_LOG_LENGTH,&logResultLength);
+        char* message = (char*)alloca(logResultLength*sizeof(char));
+        glGetShaderInfoLog(shaderID,logResultLength,&logResultLength,message);
+        std::cout << "SHADER ERROR MESSAGE" << std::endl;
+        std::cout << message << std::endl;
         glDeleteShader(shaderID);
         return 0;
     }
@@ -106,7 +112,7 @@ int main() {
     // We don't want the old OpenGL
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow* window; //creating a pntr to a window object
-    window = glfwCreateWindow(1024, 768, "Project 1", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Triangle", NULL, NULL);
     
     if( window == NULL ) {
         std::cout << "FAILED to Open GLFW Window" << std::endl;
@@ -147,6 +153,10 @@ int main() {
                                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_vertex.glsl");
     Shader fragmentShader = loadShader(
                                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_fragment.glsl");
+//    std::cout << "Vertex Shader: " << std::endl;
+//    std::cout << vertexShader.sourceCode << std::endl;
+//    std::cout << "Fragment Shader: " << std::endl;
+//    std::cout << fragmentShader.sourceCode << std::endl;
     unsigned int shader = createShader(vertexShader.sourceCode,fragmentShader.sourceCode);
     glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
