@@ -158,10 +158,7 @@ int main() {
                                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_vertex.glsl");
     Shader fragmentShader = loadShader(
                                            "/Users/rishipandey125/Documents/GitHub/Shader-Programming/CG_Lens_Simulation/CG_Lens_Simulation/initial_fragment.glsl");
-//    std::cout << "Vertex Shader: " << std::endl;
-//    std::cout << vertexShader.sourceCode << std::endl;
-//    std::cout << "Fragment Shader: " << std::endl;
-//    std::cout << fragmentShader.sourceCode << std::endl;
+
     unsigned int shader = createShader(vertexShader.sourceCode,fragmentShader.sourceCode);
     glUseProgram(shader);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
@@ -185,5 +182,8 @@ int main() {
 
 /*
  Render World Space and Pipeline Notes:
-    
+ Use vertex shaders to define shading region.
+ Hardest thing to grasp, changing from 3d space to rasterized image.
+ Read and Take notes on the RayTracing Weekend Books on how to build a pipline, and
+ integrate it with the opengl pipeline you built. 
  */
