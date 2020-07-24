@@ -185,5 +185,7 @@ int main() {
  Use vertex shaders to define shading region.
  Hardest thing to grasp, changing from 3d space to rasterized image.
  Read and Take notes on the RayTracing Weekend Books on how to build a pipline, and
- integrate it with the opengl pipeline you built. 
+ integrate it with the opengl pipeline you built.
+ look into the ways we can draw things in opengl, not just glTriangles
+ pass a 2d pos in, the vertex shader would convert that into a 3d space, then shade in your fragment shader
  */
