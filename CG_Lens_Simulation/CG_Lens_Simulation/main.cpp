@@ -134,6 +134,8 @@ int main() {
     }
     
     //2d vertex positions of triangle
+    //replaced with the two xy position of the viewport, and pass some additional info to calc z
+    //use the vertex shader to calc z, pass, xyz
     float positions[6] = {
         -0.5f, -0.5f,
         0.0f, 0.5f,
@@ -161,6 +163,7 @@ int main() {
 
     unsigned int shader = createShader(vertexShader.sourceCode,fragmentShader.sourceCode);
     glUseProgram(shader);
+    //how do we get the fragment shader to write to the rgb array? 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0 ) {
