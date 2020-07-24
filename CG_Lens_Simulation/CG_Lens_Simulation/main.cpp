@@ -187,5 +187,8 @@ int main() {
  Read and Take notes on the RayTracing Weekend Books on how to build a pipline, and
  integrate it with the opengl pipeline you built.
  look into the ways we can draw things in opengl, not just glTriangles
+ follow raytracing in a weekend, to build a render pipeline that works with cameras
+ use the vertex shader to go between world space and 2d image.
+ Draw Pixels
  pass a 2d pos in, the vertex shader would convert that into a 3d space, then shade in your fragment shader
  */
