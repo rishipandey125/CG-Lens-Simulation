@@ -136,6 +136,7 @@ int main() {
     //2d vertex positions of triangle
     //replaced with the two xy position of the viewport, and pass some additional info to calc z
     //use the vertex shader to calc z, pass, xyz
+    
     float positions[6] = {
         -0.5f, -0.5f,
         0.0f, 0.5f,
@@ -170,7 +171,7 @@ int main() {
         //clear screen to avoid flickering
         glClear( GL_COLOR_BUFFER_BIT );
 
-//        glDrawArrays(GL_TRIANGLES,0,3);
+        glDrawArrays(GL_POINTS,0,3); //gl draw points to return given pixel from fragment shader
     
 
         glEnd();
@@ -194,5 +195,9 @@ int main() {
  follow raytracing in a weekend, to build a render pipeline that works with cameras
  use the vertex shader to go between world space and 2d image.
  Draw Pixels
- pass a 2d pos in, the vertex shader would convert that into a 3d space, then shade in your fragment shader
+ pass a 2d pos in, the vertex shader would convert that into a 3d space, then the fragment shader calculates the color given the geometry and returns an rgb value, convert that from [0,1] to [0,255] and saVe it into the 2d pos color array.
+ Connecting vertex shader: same process as the red triangle
+ how to get the return of a fragment shader? how to connect all this? -- still figuring this out
+ glpoints looks like it works, check efficiency best practices on thisv
+ given an object, like a sphere, generate the position data,
  */
